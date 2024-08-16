@@ -4,16 +4,23 @@ const notion = new Client({ auth: process.env.VUE_APP_NOTION_API_KEY });
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    const { name, descr } = body;
+    const { name, story, email, country, subscribe, hatespeech } = body;
 
-    if (!name || !descr) {
+    if (!name || !story || !email || !country || hatespeech === undefined) {
       throw createError({
         statusCode: 400,
         statusMessage: "Invalid data provided",
       });
     }
 
-    await addDataToNotion({ name, descr });
+    await addDataToNotion({
+      name,
+      story,
+      email,
+      country,
+      subscribe,
+      hatespeech,
+    });
 
     return { success: true };
   } catch (error) {
@@ -38,14 +45,32 @@ const addDataToNotion = async (data) => {
           },
         ],
       },
-      Descr: {
+      Story: {
         rich_text: [
           {
             text: {
-              content: data.descr,
+              content: data.story,
             },
           },
         ],
+      },
+      Email: {
+        email: data.email,
+      },
+      Country: {
+        rich_text: [
+          {
+            text: {
+              content: data.country,
+            },
+          },
+        ],
+      },
+      Subscribe: {
+        checkbox: data.subscribe,
+      },
+      Hatespeech: {
+        checkbox: data.hatespeech,
       },
       Select: {
         select: {
@@ -65,6 +90,10 @@ export const getNotionData = async () => {
 
   return response.results.map((page) => ({
     name: page.properties.Name.title[0]?.text?.content,
-    descr: page.properties.Descr.rich_text[0]?.text?.content,
+    story: page.properties.Story.rich_text[0]?.text?.content,
+    email: page.properties.Email.email,
+    country: page.properties.Country.rich_text[0]?.text?.content,
+    subscribe: page.properties.Subscribe.checkbox,
+    hatespeech: page.properties.Hatespeech.checkbox,
   }));
 };
