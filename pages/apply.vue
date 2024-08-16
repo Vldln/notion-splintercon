@@ -122,6 +122,17 @@ const submitForm = async () => {
     await axios.post("/api/database", form.value);
     successShow.value =
       "Thank you for sharing your story. It was successfully submitted. We will review it and include it in the atlas.";
+
+    // Reset form data
+    form.value = {
+      name: "",
+      story: "",
+      email: "",
+      country: "",
+      subscribe: false,
+      hatespeech: false,
+    };
+
     setTimeout(() => {
       successShow.value = null;
     }, 5000);
