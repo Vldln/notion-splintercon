@@ -22,7 +22,7 @@
       <div v-if="errorShow" class="mb-4 bg-red-200 p-4 rounded-lg">
         {{ errorShow }}
       </div>
-      <form @submit.prevent="submitForm">
+      <form>
         <div class="mb-4">
           <label for="name" class="font-bold">Name</label>
           <input
@@ -93,7 +93,8 @@
         </div>
         <button
           class="text-xl bg-black rounded-lg text-white px-8 py-3 font-bold hover:bg-gray-200"
-          type="submit"
+          type="button"
+          @click="submitForm"
         >
           Submit
         </button>

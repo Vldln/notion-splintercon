@@ -1,22 +1,25 @@
-import { Client } from "@notionhq/client";
-const notion = new Client({ auth: process.env.VUE_APP_NOTION_API_KEY });
+import axios from "axios";
+
+const codaApiKey = process.env.VUE_APP_CODA_API_KEY;
+const codaDocId = process.env.VUE_APP_CODA_DOC_ID;
+const codaTableId = process.env.VUE_APP_CODA_TABLE_ID;
 
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    const { name, story, email, country, subscribe, hatespeech } = body;
+    const { name, email, story, country, subscribe, hatespeech } = body;
 
-    if (!name || !story || !email || !country || hatespeech === undefined) {
+    if (!name || !email || !country || !story || hatespeech === undefined) {
       throw createError({
         statusCode: 400,
         statusMessage: "Invalid data provided",
       });
     }
 
-    await addDataToNotion({
+    await addDataToCoda({
       name,
-      story,
       email,
+      story,
       country,
       subscribe,
       hatespeech,
@@ -32,68 +35,48 @@ export default defineEventHandler(async (event) => {
   }
 });
 
-const addDataToNotion = async (data) => {
-  const response = await notion.pages.create({
-    parent: { database_id: process.env.VUE_APP_NOTION_DATABASE_ID },
-    properties: {
-      Name: {
-        title: [
-          {
-            text: {
-              content: data.name,
+const addDataToCoda = async (data) => {
+  const response = await axios.post(
+    `https://coda.io/apis/v1/docs/${codaDocId}/tables/${codaTableId}/rows`,
+    {
+      rows: [
+        {
+          cells: [
+            {
+              column: "Name", // replace with your actual column ID or name
+              value: data.name,
             },
-          },
-        ],
-      },
-      Story: {
-        rich_text: [
-          {
-            text: {
-              content: data.story,
+            {
+              column: "Email", // replace with your actual column ID or name
+              value: data.email,
             },
-          },
-        ],
-      },
-      Email: {
-        email: data.email,
-      },
-      Country: {
-        rich_text: [
-          {
-            text: {
-              content: data.country,
+            {
+              column: "Story", // replace with your actual column ID or name
+              value: data.story,
             },
-          },
-        ],
-      },
-      Subscribe: {
-        checkbox: data.subscribe,
-      },
-      Hatespeech: {
-        checkbox: data.hatespeech,
-      },
-      Select: {
-        select: {
-          name: "Pending",
+            {
+              column: "Country", // replace with your actual column ID or name
+              value: data.country,
+            },
+          
+            {
+              column: "Subscribe", // replace with your actual column ID or name
+              value: data.subscribe,
+            },
+            {
+              column: "Hatespeech", // replace with your actual column ID or name
+              value: data.hatespeech,
+            },
+          ],
         },
-      },
+      ],
     },
-  });
-
-  return response;
-};
-
-export const getNotionData = async () => {
-  const response = await notion.databases.query({
-    database_id: process.env.NOTION_DATABASE_ID,
-  });
-
-  return response.results.map((page) => ({
-    name: page.properties.Name.title[0]?.text?.content,
-    story: page.properties.Story.rich_text[0]?.text?.content,
-    email: page.properties.Email.email,
-    country: page.properties.Country.rich_text[0]?.text?.content,
-    subscribe: page.properties.Subscribe.checkbox,
-    hatespeech: page.properties.Hatespeech.checkbox,
-  }));
+    {
+      headers: {
+        Authorization: `Bearer ${codaApiKey}`,
+      },
+    }
+  );
+  console.log(response);
+  return response.data;
 };

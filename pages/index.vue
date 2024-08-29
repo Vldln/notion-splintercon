@@ -15,25 +15,12 @@
         >
           <div
             class="flex flex-col items-center justify-center h-full w-[600px] mx-auto"
-            v-if="
-              item?.properties?.Select?.select?.name === 'Publish' &&
-              item?.properties?.Story?.rich_text[0]?.plain_text
-            "
           >
             <img src="/cropped-sign-all-17.png" class="w-10 pb-10" alt="" />
-
-            <p class="text-2xl text-center">
-              {{
-                item?.properties?.Story?.rich_text[0]?.plain_text ||
-                "No story available"
-              }}
-            </p>
-            <p class="text-lg font-bold text-center mt-4">
-              {{
-                item?.properties?.Country?.rich_text[0]?.plain_text ||
-                "No country available"
-              }}
-            </p>
+            <div>{{ item.values["c-1191dSGMuO"].replace(/`/g, "") }}</div>
+            <div class="font-bold mt-4">
+              {{ item.values["c-v5-gBqvkqL"].replace(/`/g, "") }}
+            </div>
           </div>
         </div>
       </div>
@@ -59,7 +46,8 @@
           <NuxtLink
             class="text-xl bg-black rounded-lg text-white px-8 py-3 font-bold"
             to="/apply"
-            >Share your story</NuxtLink
+          >
+            Share your story</NuxtLink
           >
         </div>
       </div>
@@ -73,12 +61,13 @@ import axios from "axios";
 
 const data = ref([]);
 const currentIndex = ref(0);
+const intervalId = ref(null);
 
 async function fetchData() {
   try {
     const response = await axios.get("/api/database");
     data.value = response.data.filter(
-      (item) => item.properties.Select?.select?.name === "Publish"
+      (item) => item.values["c-AvEQ2_aF6d"] === "```Publish```"
     );
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -90,12 +79,17 @@ function startSlideShow() {
     if (data.value.length > 0) {
       currentIndex.value = (currentIndex.value + 1) % data.value.length;
     }
-  }, 15000); // Change slide every 10 seconds
+  }, 15000); // Change slide every 15 seconds
+}
+
+function startAutoRefresh() {
+  intervalId.value = setInterval(fetchData, 10000); // Fetch data every 10 seconds
 }
 
 onMounted(() => {
   fetchData();
   startSlideShow();
+  startAutoRefresh();
 });
 
 onUnmounted(() => {
