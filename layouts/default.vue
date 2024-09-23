@@ -1,5 +1,5 @@
 <template>
   <div id="app-layout">
-    <main><Nuxt /><slot /></main>
+    <main class="px-3"><Nuxt /><slot /></main>
   </div>
 </template>

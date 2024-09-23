@@ -14,7 +14,7 @@
           ]"
         >
           <div
-            class="flex flex-col items-center justify-center h-full w-[600px] mx-auto"
+            class="flex flex-col items-center justify-center h-full w-full md:w-[600px] mx-auto"
           >
             <img src="/cropped-sign-all-17.png" class="w-10 pb-10" alt="" />
             <div>{{ item.values["c-1191dSGMuO"].replace(/`/g, "") }}</div>

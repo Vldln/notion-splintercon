@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto max-w-[800px] py-10">
-    <img src="/cropped-sign-all-17.png" class="w-20 mx-auto" alt="" />
+    <img src="/cropped-sign-all-17.png" class="w-10 md:w-20 mx-auto" alt="" />
     <h1 class="text-center text-3xl font-black mt-4">
       Reporting from the Shutdown
     </h1>
@@ -13,7 +13,7 @@
       individuals around the world.
     </p>
     <div
-      class="rounded-xl shadow border border-gray-300 p-8 mt-8 max-w-[600px] mx-auto"
+      class="rounded-xl shadow border border-gray-300 px-4 py-8 md:p-8 mt-8 max-w-[600px] mx-auto"
     >
       <h2 class="mb-6 text-2xl font-bold text-center">Share your story</h2>
       <div v-if="successShow" class="mb-4 bg-green-200 p-4 rounded-lg">
@@ -92,7 +92,7 @@
           >
         </div>
         <button
-          class="text-xl bg-black rounded-lg text-white px-8 py-3 font-bold hover:bg-gray-200"
+          class="text-xl w-full md:w-auto bg-black rounded-lg text-white px-8 py-3 font-bold hover:bg-gray-200"
           type="button"
           @click="submitForm"
         >
@@ -136,6 +136,7 @@ const submitForm = async () => {
 
     setTimeout(() => {
       successShow.value = null;
+      errorShow.value = null;
     }, 5000);
   } catch (error) {
     console.error("Error submitting form:", error);
