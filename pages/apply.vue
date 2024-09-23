@@ -1,6 +1,15 @@
 <template>
   <div class="mx-auto max-w-[800px] py-10">
-    <img src="/cropped-sign-all-17.png" class="w-10 md:w-20 mx-auto" alt="" />
+    <img
+      src="/cropped-sign-all-17-dark.png"
+      class="w-10 md:w-20 mx-auto hidden dark:block"
+      alt=""
+    />
+    <img
+      src="/cropped-sign-all-17.png"
+      class="w-10 md:w-20 mx-auto dark:hidden"
+      alt=""
+    />
     <h1 class="text-center text-3xl font-black mt-4">
       Reporting from the Shutdown
     </h1>
@@ -31,7 +40,7 @@
             type="text"
             required
             placeholder="Your name"
-            class="w-full border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
+            class="w-full text-black border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
           />
         </div>
         <div class="mb-4">
@@ -41,7 +50,7 @@
             placeholder="Tell us your story"
             id="story"
             required
-            class="w-full border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
+            class="w-full text-black border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
           />
         </div>
         <div class="mb-4">
@@ -52,7 +61,7 @@
             type="email"
             required
             placeholder="Email"
-            class="w-full border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
+            class="w-full text-black border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
           />
         </div>
         <div class="mb-4">
@@ -63,7 +72,7 @@
             type="text"
             required
             placeholder="Country"
-            class="w-full border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
+            class="w-full text-black border-2 p-2 border-black rounded-lg focus:outline-none focus:border-gray-200"
           />
         </div>
         <div class="mb-4">
@@ -92,7 +101,7 @@
           >
         </div>
         <button
-          class="text-xl w-full md:w-auto bg-black rounded-lg text-white px-8 py-3 font-bold hover:bg-gray-200"
+          class="text-xl w-full md:w-auto dark:bg-white dark:text-black bg-black rounded-lg text-white px-8 py-3 font-bold hover:bg-gray-200"
           type="button"
           @click="submitForm"
         >
@@ -106,7 +115,16 @@
   <script setup>
 import { ref } from "vue";
 import axios from "axios";
-
+useHead({
+  title: "Reporting from the Shutdown",
+  meta: [
+    {
+      name: "description",
+      content:
+        "At eQualitie, we believe that internet isolation isn't just about technology—it's about the human experience, about being deprived of a fundamental right. Every shutdown, every instance of internet  fragmentation carries with it a personal and powerful story. Help us build an atlas of these witnesses, documenting the impact of fragmentation on individuals around the world.",
+    },
+  ],
+});
 const form = ref({
   name: "",
   story: "",
