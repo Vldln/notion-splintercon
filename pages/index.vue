@@ -18,16 +18,16 @@
           >
             <img
               src="/cropped-sign-all-17-dark.png"
-              class="w-10 md:w-20 mx-auto hidden dark:block mb-8"
+              class="w-10 md:w-10 mx-auto hidden dark:block mb-8"
               alt=""
             />
             <img
               src="/cropped-sign-all-17.png"
-              class="w-10 md:w-20 mx-auto dark:hidden mb-8"
+              class="w-10 md:w-10 mx-auto dark:hidden mb-8"
               alt=""
             />
-            <div>{{ item.values["c-1191dSGMuO"].replace(/`/g, "") }}</div>
-            <div class="font-bold mt-4">
+            <div class="text-2xl">{{ item.values["c-1191dSGMuO"].replace(/`/g, "") }}</div>
+            <div class="font-bold  text-2xl mt-8">
               {{ item.values["c-v5-gBqvkqL"].replace(/`/g, "") }}
             </div>
           </div>
