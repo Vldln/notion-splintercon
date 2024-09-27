@@ -16,16 +16,7 @@
           <div
             class="flex flex-col items-center justify-center h-full w-full md:w-[600px] mx-auto"
           >
-            <img
-              src="/cropped-sign-all-17-dark.png"
-              class="w-10 md:w-10 mx-auto hidden dark:block mb-8"
-              alt=""
-            />
-            <img
-              src="/cropped-sign-all-17.png"
-              class="w-10 md:w-10 mx-auto dark:hidden mb-8"
-              alt=""
-            />
+            <H2 class="font-bold text-2xl mb-4">Voices of isolation</H2>
             <div class="text-2xl">{{ item.values["c-1191dSGMuO"].replace(/`/g, "") }}</div>
             <div class="font-bold  text-2xl mt-8">
               {{ item.values["c-v5-gBqvkqL"].replace(/`/g, "") }}
@@ -39,16 +30,6 @@
       class="flex flex-col items-center justify-center h-screen relative"
     >
       <div class="absolute max-w-[500px] flex flex-col">
-        <img
-          src="/cropped-sign-all-17-dark.png"
-          class="w-10 md:w-20 mx-auto hidden dark:block"
-          alt=""
-        />
-        <img
-          src="/cropped-sign-all-17.png"
-          class="w-10 md:w-20 mx-auto dark:hidden"
-          alt=""
-        />
         <h1 class="text-3xl font-black mt-4 mb-4">
           Reporting from the Shutdown
         </h1>
